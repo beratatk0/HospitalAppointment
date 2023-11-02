@@ -12,6 +12,7 @@ namespace Hospital.Core.DTOs
         public int PatientId { get; set; }
         public int DoctorId { get; set; }
         public string City { get; set; }
+        public string Department { get; set; }
         public DateTime AppointmentDate { get; set; }
         public DateTime CreatedDate { get; set; }
     }

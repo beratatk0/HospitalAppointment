@@ -11,10 +11,10 @@ namespace Hospital.API.Controllers
         private readonly IPatientService _service;
         private readonly IMapper _mapper;
 
-        public PatientsController(IMapper mapper, IPatientService patientService)
+        public PatientsController(IPatientService patientService, IMapper mapper)
         {
-            _mapper = mapper;
             _service = patientService;
+            _mapper = mapper;
         }
         [HttpGet]
         public async Task<IActionResult> All()
@@ -46,7 +46,7 @@ namespace Hospital.API.Controllers
         {
             return CreateActionResult(await _service.AddRangeAsync(newDtos));
         }
-        [HttpPost("[action]")]
+        [HttpPut]
         public async Task<IActionResult> Update(PatientUpdateDto newDto)
         {
             return CreateActionResult(await _service.UpdateAsync(newDto));
