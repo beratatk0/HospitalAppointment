@@ -18,7 +18,7 @@ namespace Hospital.Service.Services
 {
     public class Service<Entity, Dto> : IService<Entity, Dto> where Entity : BaseEntity where Dto : class
     {
-        private readonly IGenericRepository<Entity> _repository;
+        protected readonly IGenericRepository<Entity> _repository;
         protected readonly IUnitOfWork _unitOfWork;
         protected readonly IMapper _mapper;
 
@@ -64,7 +64,7 @@ namespace Hospital.Service.Services
 
         public async Task<CustomResponseDto<Dto>> GetByIdAsync(int id)
         {
-            var entity = _repository.GetByIdAsync(id);
+            var entity = await _repository.GetByIdAsync(id);
             var dto = _mapper.Map<Dto>(entity);
             return CustomResponseDto<Dto>.Success(StatusCodes.Status200OK, dto);
         }
@@ -73,7 +73,7 @@ namespace Hospital.Service.Services
         {
             var entity = await _repository.GetByIdAsync(id);
             _repository.RemoveAsync(entity);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);
         }
 
@@ -81,7 +81,7 @@ namespace Hospital.Service.Services
         {
             var entities = await _repository.Where(x => ids.Contains(x.Id)).ToListAsync();
             _repository.RemoveRangeAsync(entities);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);
         }
 
@@ -89,7 +89,7 @@ namespace Hospital.Service.Services
         {
             var entity = _mapper.Map<Entity>(dto);
             _repository.UpdateAsync(entity);
-            _unitOfWork.CommitAsync();
+            await _unitOfWork.CommitAsync();
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);
         }
 

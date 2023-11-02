@@ -18,15 +18,15 @@ namespace Hospital.Service.Mapper
             CreateMap<AppointmentCreateDto, AppointmentDto>();
             CreateMap<AppointmentUpdateDto, Appointment>();
 
-            CreateMap<PatientDto, Patient>().ReverseMap();
-            CreateMap<PatientCreateDto, PatientDto>();
-            CreateMap<PatientCreateDto, Patient>();
-            CreateMap<PatientUpdateDto, Patient>();
-
             CreateMap<DoctorDto, Doctor>().ReverseMap();
             CreateMap<DoctorCreateDto, DoctorDto>();
             CreateMap<DoctorCreateDto, Doctor>();
             CreateMap<DoctorUpdateDto, Doctor>();
+
+            CreateMap<Patient, PatientDto>().ReverseMap();
+            CreateMap<PatientCreateDto, PatientDto>();
+            CreateMap<PatientCreateDto, Patient>();
+            CreateMap<PatientUpdateDto, Patient>();
         }
     }
 }

@@ -12,15 +12,15 @@ namespace Hospital.Repo.Repositories
 {
     public class PatientRepository : GenericRepository<Patient>, IPatientRepository
     {
+        private readonly DbSet<Patient> _dbSet;
         public PatientRepository(AppDbContext context) : base(context)
         {
-
+            _dbSet = context.Set<Patient>();
         }
 
         public async Task<bool> GetLogin(PatientLoginDto loginDto)
         {
-            bool login = await _context.Patients.AnyAsync(x => x.Username == loginDto.Username && x.Password == loginDto.Password);
-            return login;
+            return await _dbSet.AnyAsync(x => x.Username == loginDto.Username && x.Password == loginDto.Password);
         }
 
         public async Task<List<Patient>> GetPatientsWithAppointments()

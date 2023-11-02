@@ -16,6 +16,5 @@ namespace Hospital.Core.DTOs
         public string MailAddress { get; set; }
         public string Sex { get; set; }
         public string City { get; set; }
-        public DateTime CreationDate { get; set; }
     }
 }

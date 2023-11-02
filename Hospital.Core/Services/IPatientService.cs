@@ -11,9 +11,8 @@ namespace Hospital.Core.Services
 {
     public interface IPatientService : IService<Patient, PatientDto>
     {
-        Task<CustomResponseDto<PatientWithAppointmentsDto>> GetPatientsWithAppointmentsAsync();
         Task<CustomResponseDto<PatientDto>> AddAsync(PatientCreateDto dto);
-        Task<CustomResponseDto<List<PatientDto>>> AddRangeAsync(PatientCreateDto dto);
+        Task<CustomResponseDto<List<PatientDto>>> AddRangeAsync(List<PatientCreateDto> dto);
         Task<CustomResponseDto<NoContentDto>> UpdateAsync(PatientUpdateDto dto);
         Task<CustomResponseDto<bool>> GetLogin(PatientLoginDto loginDto);
     }

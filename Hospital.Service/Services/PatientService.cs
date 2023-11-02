@@ -15,25 +15,25 @@ namespace Hospital.Service.Services
 {
     public class PatientService : Service<Patient, PatientDto>, IPatientService
     {
-        private readonly IPatientRepository _repository;
+        private readonly IPatientRepository _patientRepository;
         public PatientService(IMapper mapper, IUnitOfWork unitOfWork, IGenericRepository<Patient> repository, IPatientRepository patientRepository) : base(mapper, unitOfWork, repository)
         {
-            _repository = patientRepository;
+            _patientRepository = patientRepository;
         }
 
         public async Task<CustomResponseDto<PatientDto>> AddAsync(PatientCreateDto dto)
         {
             var newEntity = _mapper.Map<Patient>(dto);
-            await _repository.AddAsync(newEntity);
+            await _patientRepository.AddAsync(newEntity);
             await _unitOfWork.CommitAsync();
             var newDto = _mapper.Map<PatientDto>(dto);
             return CustomResponseDto<PatientDto>.Success(StatusCodes.Status200OK, newDto);
         }
 
-        public async Task<CustomResponseDto<List<PatientDto>>> AddRangeAsync(PatientCreateDto dto)
+        public async Task<CustomResponseDto<List<PatientDto>>> AddRangeAsync(List<PatientCreateDto> dto)
         {
             var newEntities = _mapper.Map<List<Patient>>(dto);
-            await _repository.AddRangeAsync(newEntities);
+            await _patientRepository.AddRangeAsync(newEntities);
             await _unitOfWork.CommitAsync();
             var newDtos = _mapper.Map<List<PatientDto>>(dto);
             return CustomResponseDto<List<PatientDto>>.Success(StatusCodes.Status200OK, newDtos);
@@ -41,22 +41,14 @@ namespace Hospital.Service.Services
 
         public async Task<CustomResponseDto<bool>> GetLogin(PatientLoginDto loginDto)
         {
-            bool login = await _repository.GetLogin(loginDto);
+            bool login = await _patientRepository.GetLogin(loginDto);
             return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, login);
-        }
-
-        public async Task<CustomResponseDto<PatientWithAppointmentsDto>> GetPatientsWithAppointmentsAsync()
-        {
-            var patientsWithAppointments = _repository.GetPatientsWithAppointments();
-            var dtos = _mapper.Map<PatientWithAppointmentsDto>(patientsWithAppointments);
-            return CustomResponseDto<PatientWithAppointmentsDto>.Success(StatusCodes.Status200OK, dtos);
-
         }
 
         public async Task<CustomResponseDto<NoContentDto>> UpdateAsync(PatientUpdateDto dto)
         {
             var entity = _mapper.Map<Patient>(dto);
-            _repository.UpdateAsync(entity);
+            _patientRepository.UpdateAsync(entity);
             await _unitOfWork.CommitAsync();
             return CustomResponseDto<NoContentDto>.Success(StatusCodes.Status204NoContent);
         }

@@ -10,7 +10,6 @@ namespace Hospital.Core.Repositories
 {
     public interface IPatientRepository : IGenericRepository<Patient>
     {
-        Task<List<Patient>> GetPatientsWithAppointments();
         Task<bool> GetLogin(PatientLoginDto loginDto);
     }
 }
