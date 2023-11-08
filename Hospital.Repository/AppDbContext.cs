@@ -1,4 +1,6 @@
-﻿using Hospital.Core.Models;
+﻿using Hospital.Core.DTOs;
+using Hospital.Core.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Hospital.Repo
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<PatientIdentity>
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {

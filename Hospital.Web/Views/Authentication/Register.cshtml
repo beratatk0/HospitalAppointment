@@ -1,0 +1,83 @@
+﻿@{
+    Layout = "";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hospital.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Hospital.Web.styles.css" asp-append-version="true" />
+</head>
+
+
+<div class="container">
+    <form asp-controller="Authentication" asp-action="Register">
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-md">
+                <p>Adınız ve Soyadınız</p>
+                <input name="Name" class="form-control" required="true">
+            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            <p>Yaşınız</p>
+            <div class="row">
+                <div class="col-md">
+                    <input name="Age" class="form-control" required="true">
+                </div>
+            </div>
+        </div>
+        <div style="margin-top: 10px;">
+            <p>Doğum Tarihi</p>
+            <div class="row">
+                <div class="input-group mb-3">
+                    <input name="DateOfBirth" type="date" class="form-control" value="1990-01-01" required="true">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <p class="col-auto">Kullanıcı Adı</p>
+            <input name="Username" class="form-control" style="margin-left: 10px;" required="true">
+            <div class="row" style="margin-top: 10px;">
+                <p>Şifre</p>
+                <input name="Password" type="password" class="form-control" style="margin-left: 10px;" required="true">
+            </div>
+        </div>
+        <div>
+            <div class="row">
+                <p class="col-auto">Email</p>
+                <input name="MailAddress" type="email" class="form-control" style="margin-left: 10px;" placeholder="example@email.com" required="true">
+            </div>
+        </div>
+        <div>
+            <div class="row" style="margin-top: 10px;">
+                <p>Şehir</p>
+                <input name="City" type="text" class="form-control" style="margin-left: 10px;" required="true">
+            </div>
+        </div>
+        <div>
+            <div class="row" style="margin-top: 10px;">
+                <p>Cinsiyet</p>
+                <input name="Sex" type="text" class="form-control" style="margin-left: 10px;" required="true">
+            </div>
+        </div>
+        <div class="row" style="margin-top: 10px; margin-left: 0px">
+            <input class="col-sm-2" type="checkbox" style="width: 13px;" required />
+            <p class="col-sm-10" style="margin-top: 15px;">Şartları Kabul Ediyorum</p>
+        </div>
+
+        <div>
+            <input type="submit" class="btn btn-success" value="Kayıt Ol" />
+        </div>
+    </form>
+
+</div>
+
+@if (ViewBag.Message != null)
+{
+    <script>
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        };
+    </script>
+}

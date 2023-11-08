@@ -1,0 +1,45 @@
+﻿@using Hospital.Core.DTOs;
+@model IEnumerable<DoctorDto>
+
+<div class="container">
+    <a href="AddDoctor" style="float:right; margin-bottom:30px;" class="btn btn-success">Add New Doctor</a>
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Name</td>
+                <td>City</td>
+                <td>Department</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.City</td>
+                    <td>@item.Department</td>
+                    <td>
+                        <a onclick="Remove(@item.Id)" class="btn btn-danger">Remove Appointment</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function Remove(id){
+        $.ajax({
+            url: "/Admin/Doctors",
+            method: "DELETE",
+            data: { "Id": id },
+            success: function () {
+                alert("Silindi");
+                location.reload();
+            }
+        });
+    }
+</script>

@@ -39,10 +39,20 @@ namespace Hospital.Service.Services
             return CustomResponseDto<List<PatientDto>>.Success(StatusCodes.Status200OK, newDtos);
         }
 
-        public async Task<CustomResponseDto<bool>> GetLogin(PatientLoginDto loginDto)
+        public async Task<CustomResponseDto<List<bool>>> GetLogin(PatientLoginDto loginDto)
         {
             bool login = await _patientRepository.GetLogin(loginDto);
-            return CustomResponseDto<bool>.Success(StatusCodes.Status200OK, login);
+            List<bool> bools = new List<bool>
+            {
+                login
+            };
+            if (login)
+            {
+                var info = _patientRepository.Where(x => x.Username == loginDto.Username && x.Password == loginDto.Password).ToList();
+                bools.Add(info.FirstOrDefault().IsAdmin);
+            }
+
+            return CustomResponseDto<List<bool>>.Success(StatusCodes.Status200OK, bools);
         }
 
         public async Task<CustomResponseDto<NoContentDto>> UpdateAsync(PatientUpdateDto dto)

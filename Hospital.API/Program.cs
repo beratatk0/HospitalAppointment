@@ -6,6 +6,11 @@ using Hospital.Service.Mapper;
 using Hospital.API.Modules;
 using Hospital.Repo;
 using Microsoft.AspNetCore.Mvc;
+using Hospital.Core.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Hospital.API
 {
@@ -37,6 +42,34 @@ namespace Hospital.API
             {
                 option.MigrationsAssembly(Assembly.GetAssembly(typeof(AppDbContext)).GetName().Name);
             }));
+
+            // For Identity  
+            builder.Services.AddIdentity<PatientIdentity, IdentityRole>()
+                            .AddEntityFrameworkStores<AppDbContext>()
+                            .AddDefaultTokenProviders();
+            // Adding Authentication  
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+
+                        // Adding Jwt Bearer  
+                        .AddJwtBearer(options =>
+                        {
+                            options.SaveToken = true;
+                            options.RequireHttpsMetadata = false;
+                            options.TokenValidationParameters = new TokenValidationParameters()
+                            {
+                                ValidateIssuer = true,
+                                ValidateAudience = true,
+                                ValidAudience = builder.Configuration["JWTKey:ValidAudience"],
+                                ValidIssuer = builder.Configuration["JWTKey:ValidIssuer"],
+                                ClockSkew = TimeSpan.Zero,
+                                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTKey:Secret"]))
+                            };
+                        });
 
             var app = builder.Build();
 

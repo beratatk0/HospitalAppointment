@@ -14,6 +14,6 @@ namespace Hospital.Core.Services
         Task<CustomResponseDto<PatientDto>> AddAsync(PatientCreateDto dto);
         Task<CustomResponseDto<List<PatientDto>>> AddRangeAsync(List<PatientCreateDto> dto);
         Task<CustomResponseDto<NoContentDto>> UpdateAsync(PatientUpdateDto dto);
-        Task<CustomResponseDto<bool>> GetLogin(PatientLoginDto loginDto);
+        Task<CustomResponseDto<List<bool>>> GetLogin(PatientLoginDto loginDto);
     }
 }

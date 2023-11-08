@@ -1,0 +1,34 @@
+﻿
+
+
+<div class="container">
+    <div>
+        <h1 style="text-align:center; margin-top:100px">Merhaba @ViewBag.User, Hoş geldiniz</h1>
+    </div>
+    <div class="row" style="margin-top:10%; text-align:center;">
+        <div class="col-md" style="margin-bottom:20px">
+            <a href="CreateAppointment" class="btn btn-outline-success">Randevu Al</a>
+        </div>
+        <div class="col-md">
+            <a href="PatientAppointments" class="btn btn-outline-primary">Randevularım</a>
+        </div>
+    </div>
+    @if(ViewBag.Role.Contains("Admin"))
+    {
+        <div style="margin-top:10%; text-align:center"> 
+            <a class="btn btn-danger" asp-controller="Admin" asp-action="Index">Admin Panel</a>
+        </div>
+    }
+    
+</div>
+
+
+
+@if (ViewBag.Message != null)
+{
+    <script>
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        };
+    </script>
+}

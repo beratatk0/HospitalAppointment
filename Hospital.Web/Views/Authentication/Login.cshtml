@@ -1,0 +1,46 @@
+﻿@{
+    Layout = "";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Hospital.Web</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Hospital.Web.styles.css" asp-append-version="true" />
+</head>
+
+
+<div>
+    <h1 style="display: flex; height: 200px; justify-content:center; align-items:center;">@ViewData["Title"]</h1>
+    <div class="container" style="padding: 0px 20% 0px 20%;">
+        <form asp-controller="Authentication" asp-action="Login">
+            <div class="row" style="margin-top: 20px;">
+                <p class="col-auto">Kullanıcı Adınız</p>
+                <input id="Username" name="Username" type="text" class="form-control" style="margin-left: 10px;">
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <p class="col-auto">Şifreniz</p>
+                <input id="Password" name="Password" type="password" class="form-control" style="margin-left: 10px;">
+            </div>
+
+            <div style="margin-top: 20px;">
+                <input class="btn btn-success"  type="submit" value="Giriş Yap" />
+            </div>
+        </form>
+        <div style="margin-top:20px;">
+            <a href="Authentication/Register"> Bir hesabınız yoksa hemen kayıt olabilirsiniz</a>
+        </div>
+    </div>
+</div>
+
+
+
+@if (ViewBag.Message != null)
+{
+    <script>
+        window.onload = function () {
+            alert("@ViewBag.Message");
+        };
+    </script>
+}

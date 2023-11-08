@@ -1,0 +1,41 @@
+﻿
+
+<h1>Add Doctor</h1>
+<div class="container">
+    <form asp-controller="Admin" asp-action="AddDoctor">
+        <div style="margin-top: 30px;">
+            <p>Doktor Adı ve Soyadı</p>
+            <input name="Name" class="form-control" required>
+        </div>
+        <div style="margin-top: 30px;">
+            <p>Şehir</p>
+            <select name="City" class="form-control" required>
+
+                <option value="Diyarbakır">Diyarbakır</option>
+
+                <option value="İzmir">İzmir</option>
+
+                <option value="İstanbul">İstanbul</option>
+
+                <option value="Ankara">Ankara</option>
+
+            </select>
+        </div>
+        <div style="margin-top: 30px;">
+            <p>Bölüm</p>
+            <select name="Department" class="form-control" required>
+
+                <option value="Dahiliye">Dahiliye</option>
+
+                <option value="KBB">KBB</option>
+
+                <option value="Kardiyoloji">Kardiyoloji</option>
+
+            </select>
+        </div>
+
+        <div style="margin-top:30px;">
+            <input type="submit" class="btn btn-success" value="Doktor Ekle" />
+        </div>
+    </form>
+</div>

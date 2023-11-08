@@ -1,0 +1,60 @@
+﻿@using Hospital.Core.DTOs;
+@model IEnumerable<AppointmentDto>
+
+
+<div class="container">
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>City</td>
+                <td>Department</td>
+                <td>Doctor</td>
+                <td>Appointment Date</td>
+                <td>Appointment Creation Date</td>
+                <td>Actions</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.City</td>
+                    <td>@item.Department</td>
+                    <td>@item.DoctorName</td>
+                    <td>@item.AppointmentDate</td>
+                    <td>@item.CreatedDate</td>
+                    <td>
+                        @if ((item.AppointmentDate.Year > DateTime.Now.Year) || 
+                        (item.AppointmentDate.Year >= DateTime.Now.Year && item.AppointmentDate.Month > DateTime.Now.Month) || 
+                        (item.AppointmentDate.Year >= DateTime.Now.Year && item.AppointmentDate.Month >= DateTime.Now.Month && item.AppointmentDate.Day > DateTime.Now.Day) ||
+                        (item.AppointmentDate.Year >= DateTime.Now.Year && item.AppointmentDate.Month >= DateTime.Now.Month && item.AppointmentDate.Day == DateTime.Now.Day && item.AppointmentDate.Hour >= DateTime.Now.Hour + 3))
+                        {
+                            <a onclick="CancelClicked(@item.Id)" class="btn btn-danger">Remove Appointment</a>
+                        }
+                        else
+                        {
+                            <input hidden class="btn btn-danger" value="Remove Appointment" />
+
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function CancelClicked(id) {
+        $.ajax({
+            url: "/Patient/PatientAppointments",
+            method: "DELETE",
+            data: { "Id": id },
+            success: function () {
+                alert("Silindi");
+                location.reload();
+            }
+        });
+    }
+</script>

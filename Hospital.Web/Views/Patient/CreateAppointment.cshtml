@@ -1,0 +1,140 @@
+﻿
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+
+
+
+<div class="container">
+    <form asp-controller="Patient" asp-action="CreateAppointment">
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-sm">
+                <p>İl</p>
+                <select name="City" id="citySelect" class="form-control" required>
+
+                    <option value="">Şehir Seçin</option>
+
+                    <option value="Diyarbakır">Diyarbakır</option>
+
+                    <option value="İzmir">İzmir</option>
+
+                    <option value="İstanbul">İstanbul</option>
+
+                    <option value="Ankara">Ankara</option>
+
+                </select>
+            </div>
+            <div class="col-sm">
+                <p>Bölüm</p>
+                <select name="Department" id="departmentSelect" class="form-control" required>
+
+                    <option value="">Bölüm Seçin</option>
+
+                    <option value="Dahiliye">Dahiliye</option>
+
+                    <option value="KBB">KBB</option>
+
+                    <option value="Kardiyoloji">Kardiyoloji</option>
+
+                </select>
+            </div>
+            <div class="col-sm">
+                <p>Doktor</p>
+
+                <select name="DoctorName" id="doctorSelect" class="form-control" required>
+                    <option value="">Doktor Seçin</option>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="row" style="margin-top: 20px;">
+            <div class="col-md">
+                <p>Randevu Tarihi</p>
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <input id="txtDate" name="AppointmentDate" type="date" class="form-control" required />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md">
+                <p>Randevu Saati</p>
+                <div class="row">
+                    <div class="input-group mb-3">
+                        <input id="txtTime" name="AppointmentDate" type="time" class="form-control" value="08:00" min="08:00" max="12:00" step="1800" required />
+                    </div>
+                </div>
+            </div>
+            <div style="margin-top: 20px; text-align:center;">
+                <input type="submit" style="width: 300px;" class="btn btn-outline-primary" value="Randevu Al" />
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<script>
+    var doctorSelect = document.getElementById("doctorSelect");
+
+    function DoctorList() {
+        $.ajax({
+            url: '/Patient/GetDoctor',
+            data: {
+                city: $('#citySelect').val(),
+                department: $('#departmentSelect').val(),
+            },
+            type: 'post',
+            success: function (response) {
+                var html = ``
+                console.log(response);
+                if (response.length > 0) {
+                    $.each(response, function (i, row) {
+                        html += `<option value="${row.name}">${row.name}</option>`
+                    })
+
+                    document.getElementById("doctorSelect").innerHTML = html;
+                }
+                else {
+                    html = `<option value = "" > Doktor Seçin </option>`
+                    document.getElementById("doctorSelect").innerHTML = html;
+                }
+            }
+
+        })
+    }
+
+    document.getElementById("citySelect").addEventListener("change", DoctorList)
+    document.getElementById("departmentSelect").addEventListener("change", DoctorList)
+
+    $(function () {
+        var dtToday = new Date();
+
+        var month = dtToday.getMonth() + 1;
+        var day = dtToday.getDate();
+        var year = dtToday.getFullYear();
+        var hour = dtToday.getHours();
+        var minute = dtToday.getMinutes();
+        if (month < 10)
+            month = '0' + month.toString();
+        if (day > 8)
+            day += 1;
+        if (day < 10)
+            day = '0' + day.toString();
+        if (hour < 10 || hour > 8)
+            hour = '0' + hour.toString();
+        if (minute < 10)
+            minute = '0' + hour.toString();
+
+        var minDate = year + '-' + month + '-' + day;
+
+
+        var time = hour.toString() + ":" + minute.toString();
+
+
+        $('#txtDate').attr('min', minDate);
+
+
+    });
+
+
+
+</script>
+

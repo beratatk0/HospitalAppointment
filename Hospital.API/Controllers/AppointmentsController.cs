@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Hospital.Core.DTOs;
 using Hospital.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.API.Controllers
 {
+    [Authorize(Roles = "User")]
     public class AppointmentsController : CustomBaseController
     {
         private readonly IAppointmentService _service;
@@ -20,6 +22,11 @@ namespace Hospital.API.Controllers
         public async Task<IActionResult> Get()
         {
             return CreateActionResult(await _service.GetAllAsync());
+        }
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            return CreateActionResult(await _service.GetByIdAsync(id));
         }
         [HttpPost]
         public async Task<IActionResult> Add(AppointmentCreateDto dto)
@@ -36,7 +43,7 @@ namespace Hospital.API.Controllers
         {
             return CreateActionResult(await _service.UpdateAsync(dto));
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
             return CreateActionResult(await _service.RemoveAsync(id));

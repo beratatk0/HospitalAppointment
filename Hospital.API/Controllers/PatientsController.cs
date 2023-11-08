@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Hospital.Core.DTOs;
 using Hospital.Core.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hospital.API.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PatientsController : CustomBaseController
     {
         private readonly IPatientService _service;
@@ -51,7 +53,7 @@ namespace Hospital.API.Controllers
         {
             return CreateActionResult(await _service.UpdateAsync(newDto));
         }
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Remove(int id)
         {
             return CreateActionResult(await _service.RemoveAsync(id));

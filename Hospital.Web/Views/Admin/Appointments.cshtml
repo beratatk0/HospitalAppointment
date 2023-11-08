@@ -1,0 +1,32 @@
+﻿@using Hospital.Core.DTOs;
+@model IEnumerable<AppointmentDto>
+
+<div class="container">
+    <table class="table table-stripped">
+        <thead>
+            <tr>
+                <td>Id</td>
+                <td>Patient</td>
+                <td>City</td>
+                <td>Department</td>
+                <td>Doctor</td>
+                <td>Appointment Date</td>
+                <td>Appointment Creation Date</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.PatientUsername</td>
+                    <td>@item.City</td>
+                    <td>@item.Department</td>
+                    <td>@item.DoctorName</td>
+                    <td>@item.AppointmentDate</td>
+                    <td>@item.CreatedDate</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

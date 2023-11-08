@@ -4,6 +4,7 @@ using Hospital.Core.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,7 +21,8 @@ namespace Hospital.Repo.Repositories
 
         public async Task<bool> GetLogin(PatientLoginDto loginDto)
         {
-            return await _dbSet.AnyAsync(x => x.Username == loginDto.Username && x.Password == loginDto.Password);
+            bool login = await _dbSet.AnyAsync(x => x.Username == loginDto.Username && x.Password == loginDto.Password);
+            return login;
         }
 
         public async Task<List<Patient>> GetPatientsWithAppointments()
